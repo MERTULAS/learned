@@ -15,11 +15,6 @@ class GradientDescent:
     def derivatives_sum_of_squared_residuals(self):
         derivative_intercept = 0
         derivative_slope = 0
-        """
-        prediction = self.intercept + self.slope * self.weights
-        derivative_intercept = -2 * np.sum(self.heights - prediction)
-        derivative_slope = -2 * np.sum(self.weights * (self.heights - prediction))
-        """
         for i in range(len(self.data)):
             prediction = self.intercept + self.slope * self.weights[i]
             derivative_intercept += -2 * (self.heights[i] - prediction)
