@@ -8,18 +8,16 @@ class GradientDescent:
         self.weights = self.data[data.keys()[0]]
         self.heights = self.data[data.keys()[1]]
         self.intercept = intercept
+        self.intercept_init = intercept
         self.slope = slope
+        self.slope_init = slope
         self.learning_rate = learning_rate
         self.minimize_val = 1
 
     def derivatives_sum_of_squared_residuals(self):
         derivative_intercept = 0
         derivative_slope = 0
-        """
-        prediction = self.intercept + self.slope * self.weights
-        derivative_intercept = -2 * np.sum(self.heights - prediction)
-        derivative_slope = -2 * np.sum(self.weights * (self.heights - prediction))
-        """
+
         for i in range(len(self.data)):
             prediction = self.intercept + self.slope * self.weights[i]
             derivative_intercept += -2 * (self.heights[i] - prediction)
@@ -33,18 +31,20 @@ class GradientDescent:
 
         return derivative_intercept, derivative_slope
 
-    def success_rate(self):
+    @staticmethod
+    def success_rate(weights, heights, intercept, slope):
         sum_of_squared_residuals = 0
-        for i in range(len(self.data)):
-            prediction = self.intercept + self.slope * self.weights[i]
-            sum_of_squared_residuals += (self.heights[i] - prediction) ** 2
+        for i in range(weights.index.start, weights.index.stop):
+            prediction = intercept + slope * weights[i]
+            sum_of_squared_residuals += (heights[i] - prediction) ** 2
         return sum_of_squared_residuals
 
-    def r2_squared(self, first_ssr):
-        return (first_ssr - self.success_rate()) / first_ssr
+    @staticmethod
+    def r2_squared(first_ssr, success_rate):
+        return (first_ssr - success_rate) / first_ssr
 
     def optimizer(self, number_of_steps=False):
-        first_ssr = self.success_rate()
+        first_ssr = self.success_rate(self.weights, self.heights, self.intercept_init, self.slope_init)
         time_start = time()
         if number_of_steps:
             i = 1
@@ -64,10 +64,23 @@ class GradientDescent:
                 i += 1
         time_stop = time()
         benchmark = time_stop - time_start
+        success_rate = self.success_rate(self.weights, self.heights, self.intercept, self.slope)
         print("First SSR:{}".format(first_ssr))
-        print("Last SSR:{}".format(self.success_rate()))
-        print("R-Squared:%{}".format(100 * self.r2_squared(first_ssr)))
+        print("Last SSR:{}".format(success_rate))
+        print("R-Squared:%{}".format(100 * self.r2_squared(first_ssr, success_rate)))
         print("Completed in {} seconds".format(benchmark))
 
     def get_parameters(self):
         return self.intercept, self.slope
+
+    def test(self, data):
+        try:
+            weight = data[data.keys()[0]]
+            height = data[data.keys()[1]]
+        except TypeError:
+            weight = data[0]
+            height = data[1]
+        first_ssr = self.success_rate(weight, height, self.intercept_init, self.slope_init)
+        last_ssr = self.success_rate(weight, height, self.intercept, self.slope)
+        r2_squared = self.r2_squared(first_ssr, last_ssr)
+        print("Test Score: %{}".format(100 * r2_squared))
