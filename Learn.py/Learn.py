@@ -8,9 +8,7 @@ class GradientDescent:
         self.weights = self.data[data.keys()[0]]
         self.heights = self.data[data.keys()[1]]
         self.intercept = intercept
-        self.intercept_init = intercept
         self.slope = slope
-        self.slope_init = slope
         self.learning_rate = learning_rate
         self.minimize_val = 1
 
@@ -44,7 +42,8 @@ class GradientDescent:
         return (first_ssr - success_rate) / first_ssr
 
     def optimizer(self, number_of_steps=False):
-        first_ssr = self.success_rate(self.weights, self.heights, self.intercept_init, self.slope_init)
+        intercept_init = self.heights.sum() / len(self.heights)
+        first_ssr = self.success_rate(self.weights, self.heights, intercept_init, 0)
         time_start = time()
         if number_of_steps:
             i = 1
@@ -59,7 +58,7 @@ class GradientDescent:
                 self.minimize_val, slope = self.derivatives_sum_of_squared_residuals()
                 print("Epoch:{}______Derivative_intercept:{}, Derivative_slope:{}".format(i, self.minimize_val, slope))
                 print("___Intercept:{}, Slope:{}".format(self.intercept, self.slope))
-                if 0.01 > self.minimize_val > -0.01:
+                if 0.0001 > self.minimize_val > -0.0001:
                     break
                 i += 1
         time_stop = time()
@@ -80,7 +79,8 @@ class GradientDescent:
         except TypeError:
             weight = data[0]
             height = data[1]
-        first_ssr = self.success_rate(weight, height, self.intercept_init, self.slope_init)
+        intercept_init = height.sum() / len(height)
+        first_ssr = self.success_rate(weight, height, intercept_init, 0)
         last_ssr = self.success_rate(weight, height, self.intercept, self.slope)
         r2_squared = self.r2_squared(first_ssr, last_ssr)
         print("Test Score: %{}".format(100 * r2_squared))
