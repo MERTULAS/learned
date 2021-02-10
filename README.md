@@ -3,37 +3,39 @@
 
 ## Table of Contents
 - ### [LinReg class](#linreg-class-1)
-  * #### [LinReg.train](#linreg.train-1)
-  * #### [1.2- LinReg.test](#sub-heading-1)
-  * #### [1.3- LinReg.predict](#sub-heading-2)
-  * #### [1.4- LinReg.r2_score](#sub-heading-3)
-  * #### [1.5- LinReg.intercept](#sub-heading-4)
-  * #### [1.6- LinReg.coefficients](#sub-heading-5)
-- ### [2- GradientDescent class](#heading-1)
-  * #### [2.1- Parameters](#sub-heading)
-  * #### [2.2- GradientDescent.optimizer](#sub-heading-1)
-  * #### [2.3- GradientDescent.predict](#sub-heading-2)
-  * #### [2.4- GradientDescent.get_parameters](#sub-heading-3)
-- ### [3- Preprocessing class](#heading-2)
-  * #### [3.1- Preprocessing.get_split_data](#sub-heading)
+  * #### [LinReg.train](#linregtrain-1)
+  * #### [LinReg.test](#linregtest-1)
+  * #### [LinReg.predict](#linregpredict-1)
+  * #### [LinReg.r2_score](#linregr2_score-1)
+  * #### [LinReg.intercept](#linregintercept-1)
+  * #### [LinReg.coefficients](#linregcoefficients-1)
+- ### [GradientDescent class](#gradientdescent-class-1)
+  * #### [Parameters](#parameters-1)
+  * #### [GradientDescent.optimizer](#gradientdescentoptimizer-1)
+  * #### [GradientDescent.predict](#gradientdescentpredict-1)
+  * #### [GradientDescent.get_parameters](#gradientdescentget_parameters-1)
+- ### [Preprocessing class](#preprocesssing-class-1)
+  * #### [Preprocessing.get_split_data](#preprocessingget_split_data-1)
 
 ## LinReg class
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### LinReg.train
+### LinReg.test
+### LinReg.predict
+### LinReg.r2_score
+### LinReg.intercept
+### LinReg.coefficients 
+
+## GradientDescent class
+
+### Parameters
+### GradientDescent.optimizer
+### GradientDescent.predict
+### GradientDescent.get_parameters
+
+## Preprocessing class
+
+### Preprocessing.get_split_data
 
 ### TODO
 - Random train and test split
