@@ -2,8 +2,8 @@
 #### Machine Learning library for Python (very soon C and JavaScript)
 
 ## Table of Contents
-- ### [1- LinReg class](#linreg_class)
-  * #### [1.1- LinReg.train](#sub-heading)
+- ### [LinReg class](#linreg-class)
+  * #### [LinReg.train](#linreg.train)
   * #### [1.2- LinReg.test](#sub-heading-1)
   * #### [1.3- LinReg.predict](#sub-heading-2)
   * #### [1.4- LinReg.r2_score](#sub-heading-3)
@@ -18,6 +18,22 @@
   * #### [3.1- Preprocessing.get_split_data](#sub-heading)
 
 ## LinReg class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### LinReg.train
 
 ### TODO
 - Random train and test split
