@@ -2,8 +2,8 @@
 #### Machine Learning library for Python (very soon C and JavaScript)
 
 ## Table of Contents
-- [LinReg class](#heading)
- * [1.1 LinReg.train](#sub-heading)
+### - [LinReg class](#heading)
+  #### * [1.1 LinReg.train](#sub-heading)
   #### * [1.2 LinReg.test](#sub-heading-1)
   #### * [1.3 LinReg.predict](#sub-heading-2)
   #### * [1.4 LinReg.r2_score](#sub-heading-3)
