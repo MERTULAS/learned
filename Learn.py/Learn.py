@@ -89,7 +89,6 @@ class GradientDescent:
             weight = data[0]
             height = data[1]
         first_ssr = self.first_ssr
-        print(first_ssr)
         last_ssr = self.success_rate(weight, height, self.beta)
         r2_squared = self.r2_squared(first_ssr, last_ssr)
         print("Test Score: %{}".format(100 * r2_squared))
@@ -100,11 +99,17 @@ class LinReg:
 
     def __init__(self, data):
         self.data = data
-        self.x_train = np.array(data.iloc[:, :-1].values)
+        try:
+            self.x_train = np.array(data.iloc[:, :-1].values)
+        except AttributeError:
+            self.x_train = np.array(data[:, :-1])
         self.x = np.append(np.ones((self.x_train.shape[0], 1)),
                            self.x_train,
                            axis=1)
-        self.y = np.array(data.iloc[:, -1:].values)
+        try:
+            self.y = np.array(data.iloc[:, -1:].values)
+        except AttributeError:
+            self.y = np.array(data[:, -1:])
         self.theta_init = np.append(np.ones((1, 1)) * (self.y.sum() / len(self.y)),
                                     np.ones((self.x_train.shape[1], 1)) * 0,
                                     axis=0)
@@ -122,15 +127,20 @@ class LinReg:
         print(f"Completed in {round(end_time - start_time, 2)} seconds.")
         print(f"Training R2-Score: % {self.__r2_inside(self.x, self.y) * 100}")
         print(f"Intercept: {self.theta[0][0]}, Coefficients: {self.theta[1:].reshape(1, len(self.theta) - 1)}")
-        print(self.theta.shape)
 
     def test(self, t_data):
         if self.theta is not None:
-            x_test = np.array(t_data.iloc[:, :-1].values)
+            try:
+                x_test = np.array(t_data.iloc[:, :-1].values)
+            except AttributeError:
+                x_test = np.array(t_data[:, :-1])
             x = np.append(np.ones((x_test.shape[0], 1)),
                           x_test,
                           axis=1)
-            y = np.array(t_data.iloc[:, -1:].values)
+            try:
+                y = np.array(t_data.iloc[:, -1:].values)
+            except AttributeError:
+                y = np.array(t_data[:, -1:])
             self.theta_init[0] = (y.sum() / len(y))
             print(f"Testing R2-Score: % {self.__r2_inside(x, y) * 100}")
         else:
@@ -144,8 +154,10 @@ class LinReg:
             raise Exception("Model not trained!")
 
     @staticmethod
-    def r2_score(y_true, y_pred):
-        pass
+    def r2_score(y_true, y_predict):
+        first_ssr = ((y_true - (y_true.sum() / len(y_true))) ** 2).sum()
+        last_ssr = ((y_true - y_predict) ** 2).sum()
+        return (first_ssr - last_ssr) / first_ssr
 
     @property
     def intercept(self):
@@ -154,3 +166,23 @@ class LinReg:
     @property
     def coefficients(self):
         return self.theta[1:].reshape(1, len(self.theta) - 1)
+
+
+class Preprocessing:
+    __slots__ = ["data"]
+
+    def __init__(self, data):
+        self.data = data
+
+    def get_split_data(self, test_percentage=0.33, randomizer=True):
+        if randomizer:
+            data_len = len(self.data)
+            random_indexes = [i for i in range(data_len)]
+            np.random.shuffle(random_indexes)
+            data_test = [self.data.iloc[:, :].values[i] for i in random_indexes[:round(data_len * test_percentage)]]
+            data_train = [self.data.iloc[:, :].values[i] for i in random_indexes[round(data_len * test_percentage):]]
+            data_test = np.array(data_test, dtype="int")
+            data_train = np.array(data_train, dtype="int")
+            return data_train, data_test
+        else:
+            pass
