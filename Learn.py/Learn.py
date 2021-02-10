@@ -22,8 +22,8 @@ class GradientDescent:
         prediction = np.dot(self.weights, self.beta)
         pred_gap = prediction - self.heights
         derivative_intercept = 2 * np.dot(self.weights.T[0],  pred_gap)
-        self.beta[0] = self.beta[0] - derivative_intercept * self.learning_rate / len(self.heights)
-        self.beta[1:] = self.beta[1:] - (2 * (np.dot(self.weights.T[1:],  pred_gap)) * self.learning_rate / len(self.heights))
+        self.beta[0] = self.beta[0] - derivative_intercept * self.learning_rate
+        self.beta[1:] = self.beta[1:] - (2 * (np.dot(self.weights.T[1:],  pred_gap)) * self.learning_rate)
         return derivative_intercept
 
     @staticmethod
@@ -62,7 +62,7 @@ class GradientDescent:
                 intercept_derivative = self.derivatives_sum_of_squared_residuals()
                 if self.beta[0][0] != self.beta[0][0]:
                     raise Exception("Learning rate should be chosen lower!")
-                
+
                 if 0.000001 > abs(intercept_derivative):
                     break
                 i += 1
@@ -93,3 +93,56 @@ class GradientDescent:
         last_ssr = self.success_rate(weight, height, self.beta)
         r2_squared = self.r2_squared(first_ssr, last_ssr)
         print("Test Score: %{}".format(100 * r2_squared))
+
+
+class LinReg:
+    __slots__ = ["data", "x_train", "x", "y", "theta_init", "theta"]
+
+    def __init__(self, data):
+        self.data = data
+        self.x_train = np.array(data.iloc[:, :-1].values)
+        self.x = np.append(np.ones((self.x_train.shape[0], 1)),
+                           self.x_train,
+                           axis=1)
+        self.y = np.array(data.iloc[:, -1:].values)
+        self.theta_init = np.append(np.ones((1, 1)) * (self.y.sum() / len(self.y)),
+                                    np.ones((self.x_train.shape[1], 1)) * 0,
+                                    axis=0)
+        self.theta = None
+
+    def __r2_inside(self, x, y):
+        first_ssr = ((y - np.dot(x, self.theta_init)) ** 2).sum()
+        last_ssr = ((y - np.dot(x, self.theta)) ** 2).sum()
+        return (first_ssr - last_ssr) / first_ssr
+
+    def train(self):
+        start_time = time()
+        self.theta = np.dot(np.dot(np.linalg.inv(np.dot(self.x.T, self.x)), self.x.T), self.y)
+        end_time = time()
+        print(f"Completed in {round(end_time - start_time, 2)} seconds.")
+        print(f"Training R2-Score: % {self.__r2_inside(self.x, self.y) * 100}")
+        print(f"Intercept: {self.theta[0][0]}, Coefficients: {self.theta[1:].reshape(1, len(self.theta) - 1)}")
+
+    def test(self, t_data):
+        x_test = np.array(t_data.iloc[:, :-1].values)
+        x = np.append(np.ones((x_test.shape[0], 1)), x_test, axis=1)
+        y = np.array(t_data.iloc[:, -1:].values)
+        print(f"Testing R2-Score: % {self.__r2_inside(x, y) * 100}")
+
+    def predict(self):
+        if self.theta:
+            return np.dot(self.x, self.theta)
+        else:
+            raise Exception("Model not trained!")
+
+    @staticmethod
+    def r2_score(y_true, y_pred):
+        pass
+
+    @property
+    def intercept(self):
+        return self.theta[0][0]
+
+    @property
+    def coefficients(self):
+        return self.theta[1:].reshape(1, len(self.theta) - 1)
