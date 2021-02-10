@@ -124,14 +124,18 @@ class LinReg:
         print(f"Intercept: {self.theta[0][0]}, Coefficients: {self.theta[1:].reshape(1, len(self.theta) - 1)}")
 
     def test(self, t_data):
-        x_test = np.array(t_data.iloc[:, :-1].values)
-        x = np.append(np.ones((x_test.shape[0], 1)), x_test, axis=1)
-        y = np.array(t_data.iloc[:, -1:].values)
-        print(f"Testing R2-Score: % {self.__r2_inside(x, y) * 100}")
+        if self.theta is not None:
+            x_test = np.array(t_data.iloc[:, :-1].values)
+            x = np.append(np.ones((x_test.shape[0], 1)), x_test, axis=1)
+            y = np.array(t_data.iloc[:, -1:].values)
+            print(f"Testing R2-Score: % {self.__r2_inside(x, y) * 100}")
+        else:
+            raise Exception("Model not trained!")
 
-    def predict(self):
-        if self.theta:
-            return np.dot(self.x, self.theta)
+    def predict(self, x):
+        if self.theta is not None:
+            input_x = np.append(np.ones((x.shape[0], 1)), x, axis=1)
+            return np.dot(input_x, self.theta)
         else:
             raise Exception("Model not trained!")
 
