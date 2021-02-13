@@ -18,22 +18,22 @@
   * #### [Preprocessing.get_split_data](#preprocessingget_split_data-1)
 
 ## LinReg class
-  Explanation: 
-          LinReg is a class that allows simple or multiple linear regressions and returns trained parameters.
+    Explanation: 
+            LinReg is a class that allows simple or multiple linear regressions and returns trained parameters.
 
-  Parameters: 
-          data: Unfragmented structure that contains inputs and outputs.
-  Usage:
-  '''
-  // The "full_dataset" is an unfragmented structure that contains inputs and outputs.
+    Parameters: 
+            data: Unfragmented structure that contains inputs and outputs.
+    Usage:
+    '''
+    // The "full_dataset" is an unfragmented structure that contains inputs and outputs.
 
-  lin_reg = Learn.LinReg(data=full_dataset)  # or lin_reg = LinReg(full_dataset)
-  '''
+    lin_reg = Learn.LinReg(data=full_dataset)  # or lin_reg = LinReg(full_dataset)
+    '''
 
-  Output:
-          '''
-          <Learn.LinReg at 0x1fdbd6b6220>
-          ''' 
+    Output:
+            '''
+            <Learn.LinReg at 0x1fdbd6b6220>
+            ''' 
 
   ### LinReg.train
     Explanation: 
