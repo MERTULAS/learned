@@ -1,6 +1,8 @@
 from time import time
 import numpy as np
 
+# Author: H.Mert ULAS <h.mert.ulas@gmail.com>
+
 
 class GradientDescent:
     __slots__ = ["learning_rate", "weights", "heights", "beta", "data_x", "cost"]
@@ -177,10 +179,32 @@ class Preprocessing:
             data_len = len(self.data)
             random_indexes = [i for i in range(data_len)]
             np.random.shuffle(random_indexes)
-            data_test = [self.data.iloc[:, :].values[i] for i in random_indexes[:round(data_len * test_percentage)]]
-            data_train = [self.data.iloc[:, :].values[i] for i in random_indexes[round(data_len * test_percentage):]]
-            data_test = np.array(data_test, dtype="int")
-            data_train = np.array(data_train, dtype="int")
+            data_test = \
+                np.array([self.data.iloc[:, :].values[i] for i in random_indexes[:round(data_len * test_percentage)]],
+                         dtype="int")
+            data_train = \
+                np.array([self.data.iloc[:, :].values[i] for i in random_indexes[round(data_len * test_percentage):]],
+                         dtype="int")
             return data_train, data_test
         else:
             pass
+
+    @staticmethod
+    def polynomial_features(data, data_out=None, degree=2, bias_column=False):
+        if data_out is None:
+            data_x = data.iloc[:, :-1].values
+            data_y = data.iloc[:, -1:].values
+            new = np.empty((len(data_x), 0), int)
+            temp = data_x
+            len_new = len(data_x[0])
+            while degree > 1:
+                for i in range(len(data_x[0])):
+                    for j in range(i, len_new):
+                        cross = data_x[:, i] * temp[:, j]
+                        if list(cross) not in map(lambda x: list(x), new.T):
+                            new = np.append(new, cross.reshape(len(data_x), 1), axis=1)
+                len_new = len(new[0])
+                degree -= 1
+                temp = new
+            new = np.append(data_x, new, axis=1)
+            return np.append(new, data_y, axis=1)
