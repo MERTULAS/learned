@@ -107,7 +107,7 @@ class LinReg:
         self.theta_init = np.append(np.ones((1, 1)) * (self.y.sum() / len(self.y)),
                                     np.ones((self.x_train.shape[1], 1)) * 0,
                                     axis=0)
-        self.theta = None
+        self.theta = np.empty((len(self.x), 0))
 
     def __r2_inside(self, x, y):
         first_ssr = ((y - np.dot(x, self.theta_init)) ** 2).sum()
@@ -116,14 +116,14 @@ class LinReg:
 
     def train(self):
         start_time = time()
-        self.theta = np.dot(np.dot(np.linalg.inv(np.dot(self.x.T, self.x)), self.x.T), self.y)
+        self.theta = np.linalg.lstsq(self.x, self.y, rcond=None)[0]
         end_time = time()
         print(f"Completed in {round(end_time - start_time, 2)} seconds.")
         print(f"Training R2-Score: % {self.__r2_inside(self.x, self.y) * 100}")
         print(f"Intercept: {self.theta[0][0]}, Coefficients: {self.theta[1:].reshape(1, len(self.theta) - 1)}")
 
     def test(self, t_data):
-        if self.theta is not None:
+        if self.theta.size != 0:
             try:
                 x_test = np.array(t_data.iloc[:, :-1].values)
             except AttributeError:
@@ -141,7 +141,7 @@ class LinReg:
             raise Exception("Model not trained!")
 
     def predict(self, x):
-        if self.theta is not None:
+        if self.theta.size != 0:
             input_x = np.append(np.ones((x.shape[0], 1)), x, axis=1)
             return np.dot(input_x, self.theta)
         else:
@@ -168,6 +168,55 @@ class LinReg:
             raise Exception("Model not trained!")
 
 
+class LogReg:
+    __slots__ = ["x", "y", "learning_rate", "iteration", "weights"]
+
+    def __init__(self, x, y, learning_rate=0.01, iteration=1000):
+        self.x = x
+        self.y = y
+        self.learning_rate = learning_rate
+        self.iteration = iteration
+        self.weights = np.append(np.full((1, 1), 0.0), np.full((self.x.shape[0], 1), 0.01), axis=0)
+        self.x = np.append(np.ones((1, self.x.shape[1])), self.x, axis=0)
+
+    @staticmethod
+    def __sigmoid(z):
+        return 1 / (1 + np.exp(-z))
+
+    def __forward_propagation(self):
+        return np.dot(self.weights.T, self.x)
+
+    def __backward_propagation(self, y):
+        return np.dot(self.x, (y - self.y).T) / self.x.shape[1]
+
+    def __inner_predict(self, x):
+        z = self.__sigmoid(np.dot(self.weights.T, x))
+        prediction = np.zeros((1, x.shape[1]))
+        for i in range(z.shape[1]):
+            prediction[0, i] = 0 if z[:, i] <= 0.5 else 1
+        return prediction
+
+    @staticmethod
+    def accuracy(y_true, y_pred):
+        return 100 - np.average(np.abs(y_pred - y_true)) * 100
+
+    def train(self):
+        cost_list = []
+        for i in range(self.iteration):
+            out = self.__sigmoid(self.__forward_propagation())
+            loss = -self.y * np.log(out) - (1 - out) * np.log(1 - out)
+            cost = loss.sum() / self.x.shape[1]
+            cost_list.append(cost)
+            derivatives = self.__backward_propagation(out)
+            self.weights = self.weights - self.learning_rate * derivatives
+            print("\r", f"Iteration:{i}", end="")
+        print(f"\n%{self.accuracy(self.y, self.__inner_predict(self.x))}")
+
+    def predict(self, x):
+        x = np.append(np.ones((1, x.shape[1])), x, axis=0)
+        return self.__inner_predict(x)
+
+
 class Preprocessing:
     __slots__ = ["data"]
 
@@ -190,11 +239,15 @@ class Preprocessing:
             pass
 
     @staticmethod
-    def polynomial_features(data, data_out=None, degree=2, bias_column=False):
+    def polynomial_features(data, data_out=None, degree=2):
         if data_out is None:
-            data_x = data.iloc[:, :-1].values
-            data_y = data.iloc[:, -1:].values
-            new = np.empty((len(data_x), 0), int)
+            try:
+                data_x = data.iloc[:, :-1].values
+                data_y = data.iloc[:, -1:].values
+            except AttributeError:
+                data_x = data[:, :-1]
+                data_y = data[:, -1:]
+            new = np.empty((len(data_x), 0))
             temp = data_x
             len_new = len(data_x[0])
             while degree > 1:
