@@ -150,8 +150,8 @@
 ## LogReg class
 
 ### Parameters
-### LogReg.train()
-### LogReg.predict()
+### LogReg.train
+### LogReg.predict
 
 ## GradientDescent class
 
