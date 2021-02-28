@@ -9,6 +9,9 @@
   * #### [LinReg.r2_score](#linregr2_score-1)
   * #### [LinReg.intercept](#linregintercept-1)
   * #### [LinReg.coefficients](#linregcoefficients-1)
+- ### [LogReg class](#logreg-class-1)
+  * #### [LinReg.train](#logregtrain-1)
+  * #### [LinReg.predict](#logregpredict-1)
 - ### [GradientDescent class](#gradientdescent-class-1)
   * #### [Parameters](#parameters-1)
   * #### [GradientDescent.optimizer](#gradientdescentoptimizer-1)
@@ -144,6 +147,11 @@
             '''
             array([[812.87723722]])
             '''
+## LogReg class
+
+### Parameters
+### LogReg.train()
+### LogReg.predict()
 
 ## GradientDescent class
 
