@@ -1,0 +1,19 @@
+Metadata-Version: 1.2
+Name: learned
+Version: 0.4.0
+Summary: Some machine learning.
+Home-page: https://github.com/MERTULAS/learned
+Author: H.Mert ULAS
+Author-email: h.mert.ulas@gmail.com
+License: MIT
+Description: It contains data preprocessing, regression, classification, recognition algorithms.
+Platform: UNKNOWN
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.5.5

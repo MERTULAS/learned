@@ -15,7 +15,6 @@ setuptools.setup(name="learned",
                  author_email="h.mert.ulas@gmail.com",
                  packages=setuptools.find_packages(),
                  classifiers=[
-                  'Development Status :: 0.1.1 - Development/Developmental Release',
                   'Intended Audience :: Developers',
                   'Intended Audience :: Education',
                   'Intended Audience :: Science/Research',
