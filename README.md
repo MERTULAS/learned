@@ -1,4 +1,4 @@
-# learn
+# learned
 #### Machine Learning library for Python (very soon C and JavaScript)
 
 ## Table of Contents
