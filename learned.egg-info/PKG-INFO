@@ -1,13 +1,24 @@
 Metadata-Version: 2.1
 Name: learned
-Version: 0.5.4.2
+Version: 0.5.4.3
 Summary: Package containing deep learning model, classic machine learning models, various preprocessing functions and result metrics
 Home-page: https://github.com/MERTULAS/learned
 Author: H.Mert ULAS
 Author-email: h.mert.ulas@gmail.com
 License: MIT
 Description: # learned
-        #### Machine Learning library for Python (very soon C and JavaScript)
+        ### Machine Learning library for Python
+        
+        ## Introduction
+        #### Package containing deep learning model, classic machine learning models, various preprocessing functions and result metrics
+        
+        
+        ![image](https://user-images.githubusercontent.com/67822910/113212247-2e497500-927f-11eb-8ac5-539676edaa41.png)
+        ![image](https://user-images.githubusercontent.com/67822910/113213441-e0357100-9280-11eb-954c-b5b1e33c2aa3.png)
+        ![image](https://user-images.githubusercontent.com/67822910/113213571-0a872e80-9281-11eb-9cab-0ecbc7943d8c.png)
+        ![image](https://user-images.githubusercontent.com/67822910/113213775-46ba8f00-9281-11eb-9156-b37414d40df8.png)
+        ![image](https://user-images.githubusercontent.com/67822910/113213893-6b166b80-9281-11eb-8113-d6df48760999.png)
+         
         
         # Table of Contents
         - ## [.neural_network](#neural_network-1)
@@ -173,19 +184,19 @@ Description: # learned
         			activation: 
         				Determines with which function the layer will be activated. (default values is "tanh")
         					"sigmoid": 0 - 1
-        ![image](https://user-images.githubusercontent.com/67822910/113162450-fd9a1900-9247-11eb-9845-a9db231ff7d3.png)
+        <p align="center"><img src="https://user-images.githubusercontent.com/67822910/113162450-fd9a1900-9247-11eb-9845-a9db231ff7d3.png"></p>
         					
         					"tanh":  -1 - 1
-        ![image](https://user-images.githubusercontent.com/67822910/113162775-3df99700-9248-11eb-8301-6b014d3fb57a.png)
+        <p align="center"><img src="https://user-images.githubusercontent.com/67822910/113162775-3df99700-9248-11eb-8301-6b014d3fb57a.png"></p>
         					
         					"relu":  it makes all negative values to zero
-        ![image](https://user-images.githubusercontent.com/67822910/113163132-8b760400-9248-11eb-9e59-8f72ea9471dc.png)
+        <p align="center"><img src="https://user-images.githubusercontent.com/67822910/113163132-8b760400-9248-11eb-9e59-8f72ea9471dc.png"></p>
         					
         					"softmax": it is a probability function, it return values which sums of values equal 1
-        ![image](https://user-images.githubusercontent.com/67822910/113164891-33d89800-924a-11eb-9b5f-8aab6b94af0c.png)
+        <p align="center"><img src="https://user-images.githubusercontent.com/67822910/113164891-33d89800-924a-11eb-9b5f-8aab6b94af0c.png"></p>
         					
         					"leaky_relu": it don't makes all negative values to zero but makes too close to zero
-        ![image](https://user-images.githubusercontent.com/67822910/113166087-1d7f0c00-924b-11eb-8a38-870a4149a081.png)
+        <p align="center"><img src="https://user-images.githubusercontent.com/67822910/113166087-1d7f0c00-924b-11eb-8a38-870a4149a081.png"></p>
         							
            		Example for neural network structure:
         					from learned.neural_network.models import Sequential, DNNModel
@@ -210,7 +221,7 @@ Description: # learned
         					ohe_tr = OneHotEncoder(y_labels_tr).transform()
         					ohe_te = OneHotEncoder(y_labels_te).transform()
         					
-        					Model = Sequential(pixels_tr, ohe_tr, learning_rate=0.01, loss="cross_entropy", iteration=100)
+        					Model = Sequential(pixels_tr, ohe_tr, learning_rate=0.01, loss="cross_entropy", iteration=600)
         
         					Model.add(Layer(neurons=150, activation="relu", weights_initializer="he_normal"))
         					Model.add(Layer(neurons=150, activation="relu", weights_initializer="he_normal"))
@@ -218,7 +229,7 @@ Description: # learned
         					Model.add(Layer(neurons=10, activation="softmax", weights_initializer="xavier_normal"))
         					
         					Model.train()
-        					>>>![image](https://user-images.githubusercontent.com/67822910/113175015-a7cb6e00-9253-11eb-8963-ba9e52d8f9f3.png)
+        <p align="center"><img src="https://user-images.githubusercontent.com/67822910/113175015-a7cb6e00-9253-11eb-8963-ba9e52d8f9f3.png"></p>
         					pred = Model.predict(pixels_tr)
         					Model.save_model("mnist_predicter")
         					loaded_model = DNNModel("mnist_predicter")
