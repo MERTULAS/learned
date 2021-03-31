@@ -117,8 +117,8 @@ class Sequential:
         model_functions = {}
         for index, layer in enumerate(self.NN_structure):
             model_functions[index] = layer.activation
-            np.save(file_name + f"\\weights-{index}.npy", layer.weights)
-        with open(file_name + "\\activations.json", 'w') as f:
+            np.save(file_name + f"/weights-{index}.npy", layer.weights)
+        with open(file_name + "/activations.json", 'w') as f:
             json.dump(model_functions, f)
 
 
@@ -127,7 +127,7 @@ class DNNModel:
 
     def __init__(self, model_folder):
         self.model_folder = model_folder
-        with open(model_folder + "\\activations.json", "r") as f:
+        with open(model_folder + "/activations.json", "r") as f:
             self.model_funcs = json.load(f)
         self.weights = os.listdir(self.model_folder)[1:]
         self.activation_func_list = {"tanh": self.__tanh, "relu": self.__relu, "sigmoid": self.__sigmoid,
@@ -138,7 +138,7 @@ class DNNModel:
         for index, weight in enumerate(self.weights):
             out = np.append(np.ones((1, out.shape[1])), out, axis=0)
             out = self.activation_func_list[self.model_funcs[str(index)]](
-                np.dot(np.load(self.model_folder + "\\" + weight), out))
+                np.dot(np.load(self.model_folder + "/" + weight), out))
         return out
 
     @staticmethod
