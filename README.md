@@ -36,20 +36,20 @@
   * #### [parameters](#oheparams-1)
   * #### [methods](#ohemethods-1)
   * #### [example](#ohexample-1)
-- ### [normalizer function](#normalizer-1)
+- ### [normalizer() function](#normalizer()-1)
   * #### [parameters](#normalizerparams-1)
   * #### [example](#normalizerexample-1)
-- ### [get_split_data function](#get_split_data-1)
+- ### [get_split_data() function](#get_split_data()-1)
   * #### [parameters - hyperparameters](#getsplitdataparams-1)
   * #### [example](#getsplitdataexample-1)
-- ### [polynomial_features function](#polynomial_features-1)
+- ### [polynomial_features() function](#polynomial_features-1)
   * #### [parameters - hyperparameters](#polynomialfeaturesparams-1)
   * #### [example](#polynomialfeaturesparams-1)
 - ## [.metrics](#metrics-1)
-- ### [confusion_matrix function](#confusionmatrix-1)
+- ### [confusion_matrix() function](#confusion_matrix()-1)
   * #### [parameters](#confusionmatrixparams-1)
   * #### [example](#confusionmatrixexample-1)
-- ### [accuracy](#accuracy-1)
+- ### [accuracy() function](#accuracy()-1)
   * #### [parameters](#accuracyparams-1)
   * #### [example](#accuracyexample-1)
 
@@ -57,7 +57,8 @@
 
 ## .neural_network
 
-Explanation: It contains the classes required for the deep neural network. These classes can be customized with various functions. The trained model can be saved as a folder, then call this folder and used to predict other entries
+Explanation: It contains the classes required for the deep neural network. These classes can be customized with 
+various functions. The trained model can be saved as a folder, then call this folder and used to predict other entries
 
 ### Sequential class
 
@@ -65,15 +66,21 @@ Explanation: It contains the classes required for the deep neural network. These
 			This class is used to create a sequential deep learning structure.
    
    	Parameters:
-			x: input values, as type below
-			For example, if you select images for input values and the input data contains 30 sample images in 28x28 size, the images should be flattened to (pixel x N_sample), converted to (784, 30) and then entered into the model.
-			y: data which size of (1 x N_samples) for regression or (class_number x N_samples) for classification 
+			x: 
+				Input values, as type below
+			For example, if you select images for input values and the input data contains 30 sample images in 28x28 size, 
+		the images should be flattened to (pixel x N_sample), converted to (784, 30) and then entered into the model.
+			y: 
+				Data which size of (1 x N_samples) for regression or (class_number x N_samples) for classification 
 			Note that: It can be (1 x N_samples) for binary classification. (if output layer contains sigmoid function)
 	
 	Hyperparameters:
-			learning_rate: it can be changed in case of exploding or vanishing of gradients. (Default value is 0.01)
-			iteration: iteration number. (Default value is 1000)
-			loss: the loss function to be applied to the model is specified. (Default value is "binary_cross_entropy")
+			learning_rate: 
+				It can be changed in case of exploding or vanishing of gradients. (Default value is 0.01)
+			iteration: 
+				Iteration number. (Default value is 1000)
+			loss: 
+				The loss function to be applied to the model is specified. (Default value is "binary_cross_entropy")
 				Speciable loss functions:
 					For classifications:
 						"binary_cross_entropy" : 
@@ -91,13 +98,27 @@ Explanation: It contains the classes required for the deep neural network. These
 			
       
    	methods: 
-			Sequential.add(x): adds a layer to the model structure. (x is a object which includes "Layer" class (very soon also "Convolution" class))
-			Sequential.train(): it starts the learning process and does not take parameters.
-			Sequential.test(x, y): it gives the accuracy value for the test inputs and test outputs
-			Sequential.predict(x): returns the predicted value / category for x value
-			Sequential.save_model("model_name"): saves the trained model as a folder as specified in the parameter name. (To the same directory)
-			Sequential.cost_list: it gives the costs for visualisation
-			Sequential.accuracy_list: it gives the accuracies for visualisation
+			Sequential.add(x): 
+				Adds a layer to the model structure. 
+				(x is a object which includes "Layer" class (very soon also "Convolution" class))
+				
+			Sequential.train(): 
+				It starts the learning process and does not take parameters.
+				
+			Sequential.test(x, y): 
+				It gives the accuracy value for the test inputs and test outputs
+				
+			Sequential.predict(x): 
+				Returns the predicted value / category for x value
+				
+			Sequential.save_model("model_name"): 
+				Saves the trained model as a folder as specified in the parameter name. (To the same directory)
+				
+			Sequential.cost_list: 
+				It gives the costs for visualisation
+				
+			Sequential.accuracy_list: 
+				It gives the accuracies for visualisation
 
 
 ### DNNModel class
@@ -109,7 +130,8 @@ Explanation: It contains the classes required for the deep neural network. These
 			model_folder: it takes saved model's folder name
 	
 	Methods:
-			DNNModel.predict(x): returns the predicted value / category for x value
+			DNNModel.predict(x): 
+				Returns the predicted value / category for x value
 			
 
 ### Layer class
@@ -118,8 +140,11 @@ Explanation: It contains the classes required for the deep neural network. These
 			ANN model's hidden layers are defined by this layer
 			
 	Hyperparameters:
-			neurons: indicates how many neurons the layer has
-			weights_initializer: determines how layer weights are started (default value is "uniform")
+			neurons: 
+				Indicates how many neurons the layer has
+				
+			weights_initializer: 
+				Determines how layer weights are started (default value is "uniform")
 					"he_uniform":
 							suitable_size_uniform_values * sqrt(6 / prev_layers_output_size)
 					
@@ -137,7 +162,8 @@ Explanation: It contains the classes required for the deep neural network. These
 							
 					Note that: "he" initializers better for relu / leaky_relu activation functions
 					
-			activation: determines with which function the layer will be activated. (default values is "tanh")
+			activation: 
+				Determines with which function the layer will be activated. (default values is "tanh")
 					"sigmoid": 0 - 1
 							![image](https://user-images.githubusercontent.com/67822910/113162450-fd9a1900-9247-11eb-9845-a9db231ff7d3.png)
 					
@@ -193,152 +219,318 @@ Explanation: It contains the classes required for the deep neural network. These
 					>>> pred2 == pred
 
 
-## LinReg class
-    Explanation: 
-            LinReg is a class that allows simple or multiple linear regressions and returns trained parameters.
+## .models
 
-    Parameters: 
-            data: Unfragmented structure that contains inputs and outputs.
-    Usage:
-    '''
-    // The "full_dataset" is an unfragmented structure that contains inputs and outputs.
+### KNN class
+	Explanation:
+		Includes the k-Nearest Neighbors algorithm.
+	Parameters:
+		x:
+			Train input values
+		y:
+			Train output values
+	Hyperparameters:
+		k_neighbors:
+			It determines how many neighbors will be evaluated.
+		
+		metric:
+			"euclidean"
+			It determines which distance finding function will be used.(Default value is "euclidean")
+			(other distance functions coming soon)
+		
+		model:
+			"classification" for categorical prediction
+			"regression" for numerical prediction
+	Methods:
+		KNN.predict(x):
+			Returns prediction from K nearest neighbors. Returns the most frequently value for "classification" or
+			returns average value for "regression"
+			
+	Usage:
+	'''
+		from learned.models import KNN
+		knn = KNN(x, y, k_neighbors=3, metric="euclidean", model="classification")
+		knn.predict(test_x)
+	'''
+			
+		
+### LinReg class
+    	Explanation: 
+            	LinReg is a class that allows simple or multiple linear regressions and returns trained parameters.
 
-    lin_reg = Learn.LinReg(data=full_dataset)  # or lin_reg = LinReg(full_dataset)
-    '''
+    	Parameters: 
+            	data_x: 
+			Input values
+	    	data_y: 
+			True output values
+    	Usage:
+    	'''
+		from learned.models import LinReg
+		lin_reg = LinReg(data_x, data_y)
+    	'''
+    	Methods: 
+	
+        	LinReg.train(): 
+			It applies the training process for the dataset entered while creating the class.
+    		Output:
+			(An example simple linear regression output)
+			    '''
+			    Completed in 0.0 seconds.
+			    Training R2-Score: % 97.0552464372771
+			    Intercept: 10349.456288746507, Coefficients: [[812.87723722]]
+			    '''
 
-    Output:
-            '''
-            <Learn.LinReg at 0x1fdbd6b6220>
-            ''' 
+   		LinReg.test(test_x, test_y)
+            		Applies the created model to a different input and gives the r2 score result.
+		Output:
+			(An example simple linear regression output)
+			    '''
+			    Testing R2-Score: % 91.953582170654
+			    '''
+			Note: 
+				Returns an error message if applied for a model that has not been previously trained.
+				'''
+				  Exception: Model not trained!
+				'''
+   		
+  		LinReg.predict(x): 
+			Applies the created model to the input data, which it takes as a parameter, and returns the estimated results.
 
-  ### LinReg.train
-    Explanation: 
-            It applies the training process for the dataset entered while creating the class.
+    			Note: 
+			    Returns an error message if applied for a model that has not been previously trained.
+			    '''
+			    Exception: Model not trained!
+			    '''
+   		LinReg.r2_score(y_true, y_predict)
+            		It takes actual results and predicted results for the same inputs as parameters and returns the value of r2 score.
 
-    Parameters: 
-            This method does not take parameter!
-    Usage:
-    '''
-    lin_reg.train()
-    '''
+   		LinReg.intercept
+            		Returns the trained intercept value
+			 
+   		LinReg.coefficients 
+			Returns the trained coefficients
 
-    Output:
-            (An example simple linear regression output)
-            '''
-            Completed in 0.0 seconds.
-            Training R2-Score: % 97.0552464372771
-            Intercept: 10349.456288746507, Coefficients: [[812.87723722]]
-            '''
+### LogReg class
 
-  ### LinReg.test
-    Explanation: 
-            Applies the created model to a different input and gives the r2 score result.
+	Explanation: 
+            	LogReg is a class that allows simple logistic regressions and returns trained parameters. 
+		Works as a neural network one layer which includes single perceptron 
 
-    Parameters: 
-            t_data: Unfragmented structure that contains inputs and outputs.
-    Usage:
-    '''
-    lin_reg.test(t_data=test_dataset) # or lin_reg.test(test_dataset)
-    '''
+    	Parameters: 
+            	x: 
+			Input values
+	    	y: 
+			True output values
+	
+	Hyperparameters:
+		learning_rate: 
+			It can be changed in case of exploding or vanishing of gradients. (Default value is 0.01)
+		iteration: 
+			Iteration number. (Default value is 1000)		
+    	Usage:
+    	'''
+		from learned.models import LogReg
+		log_reg = LogReg(x, y, learning_rate=0.001, iteration=1000)
+    	'''
+    	Methods: 
+	
+        	LogReg.train(): 
+			It applies the training process for the dataset entered while creating the class.
+			
+  		LogReg.predict(x): 
+			Applies the created model to the input data, which it takes as a parameter, and returns the estimated results.
 
-    Output:
-            (An example simple linear regression output)
-            '''
-            Testing R2-Score: % 91.953582170654
-            '''
+   		LogReg.accuracy(y_true, y_pred):
+			Gives the model accuracy value
 
-    Note: 
-            Returns an error message if applied for a model that has not been previously trained.
-            '''
-            Exception: Model not trained!
-            '''
-  ### LinReg.predict
-    Explanation: 
-            Applies the created model to the input data, which it takes as a parameter, and returns the estimated results.
+### GradientDescent class
 
-    Parameters: 
-            x: Input dataset consisting of arguments
-    Usage:
-    '''
-    predicts = lin_reg.predict(x=x_set) # or predicts = lin_reg.predict(x_set)
-    '''
+    	Explanation: 
+            	GradientDescent is a class that allows simple or multiple linear regressions and returns trained parameters. 
+		Works as a neural network one layer which includes single perceptron 
 
-    Output:
-            Predicted values list
+    	Parameters: 
+            	data_x: 
+			Input values
+	    	data_y: 
+			True output values
+	Hyperparameters:
+		learning_rate: 
+			It can be changed in case of exploding or vanishing of gradients. (Default value is 0.00001) 
+    	Usage:
+    	'''	
+		from learned.models import GradientDescent
+		gd = GradientDescent(data_x, data_y, learning_rate=0.001)
+    	'''
+    	Methods: 
+	
+        	GradientDescent.optimizer(number_of_steps=False): 
+			It applies the training process for the dataset entered while creating the class.
+		
+		Parameters:
+			number_of_steps:
+				Iteration number. Default value is "False". 
+				If no value is entered, continues until the step size is less than 0.0001. 
+    		Output:
+			(An example multiple linear regression output)
+			    '''
+			    Completed in 109.72 seconds
+			    R-Squared:%63.32075249528732
+			    Test Score: %41.059223927525004
+			    (-17003.943940164645, array([[3349.00019104],
+			    [1658.35639114],[  12.87388237]]))
+			    '''
 
-    Note: 
-            Returns an error message if applied for a model that has not been previously trained.
-            '''
-            Exception: Model not trained!
-            '''
-  ### LinReg.r2_score
-    Explanation: 
-            It takes actual results and predicted results for the same inputs as parameters and returns the value of r2 score.
+   		GradientDescent.test(data_x, data_y):
+            		Applies the created model to a different input and gives the r2 score result.
+   		
+  		GradientDescent.predict(x): 
+			Applies the created model to the input data, which it takes as a parameter, and returns the estimated results.
 
-    Parameters: 
-            y_true: Real results
-            y_predict: Estimated results
-    Usage:
-    '''
-    lin_reg.r2_score(y_true=real_results, y_predict=predicted_results) # or lin_reg.r2_score(real_results, predicted_results)
-    '''
+   		GradientDescent.r2_score(y_true, y_pred)
+            		It takes actual results and predicted results for the same inputs as parameters and returns the value of r2 score.
+		
+		GradientDescent.get_parameters():
+			Returns the trained weights
+   		
+## .preprocessing
 
-    Output:
-            '''
-            0.970552
-            dtype: float64
-            '''
+### OneHotEncoder class
+	
+	Explanation:
+		One hot encoding is a process by which categorical variables are converted 
+	into a form that could be provided to ML algorithms to do a better job in prediction.
+	
+	Methods:
+		OneHotEncoder(x).transform():
+			Note: x must be a numpy object.
+			Returns the transformed values.(Values are in ascending order / alphabetical order.)
+			
+		OneHotEncoder(x).values:
+			Returns the dict which includes values and tranformed values
+	Usage:
+	'''
+		from learned.preprocessing import OneHotEncoder
+		ohe = OneHotEncoder(x)
+	'''	
+		For example,
+			from learned.preprocessing import OneHotEncoder
+			vals = ["cat", "dog", "bird", "lion"]
+			ohe = OneHotEncoder(vals)
+			transformed_vals = ohe.transform()
+			transformed_vals => [[0, 1, 0, 0],
+					     [0, 0, 1, 0],
+					     [1, 0, 0, 0],
+					     [0, 0, 0, 1]]
+			the_dict = ohe.values
+			the_dict => {"bird": [1, 0, 0, 0],
+				     "cat":  [0, 1, 0, 0],
+				     "dog":  [0, 0, 1, 0],
+				     "lion": [0, 0, 0, 1]}
+				 
+### normalizer() function
+	Explanation:
+		Converts the entered data to the 0-1 range.
+	
+	Parameters:
+		data:
+			Entered data must be numpy object
+	Usage:
+	'''
+		from learned.preprocessing import normalizer
+		
+		data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+		normalize = normalizer(data)
+		normalize => [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+	'''
+	
+### get_split_data() function
+	
+	Explanation:
+		Divides and shuffles the given data.
+	
+	Parameters:
+		data:
+			Full data (inputs and outputs (not split))
+	Hyperparameters:
+		test_percentage:
+			Determines what percentage of data is allocated as test data.(Default value is 0.33)
+		random_state:
+			Determines the random distribution constant.(Default value is 0)
+			
+	Usage:
+	'''
+		from learned.preprocessing import get_split_data
+		
+		train_data, test_data = get_split_data(full_data, test_percentage=0.2, random_state=42)
+	'''
 
-  ### LinReg.intercept
-    Explanation: 
-            Returns the trained intercept value
+### polynomial_features() function
+	Explanation:
+		Adds polynomial features, layers to the entered data.
+	
+	Parameters:
+		data:
+			Input data
+	Hyperparameters:
+		degree:
+			It determines the degree of polynomial distribution to be made.(Default value is "2")
+	Usages:
+	'''
+		from learned.preprocessing import polynomial_features
+		
+		a = np.array([[1, 2], [3, 4], [6, 2], [2, 7]])
+		features = polynomial_features(a, degree=3)
+		features => [[  1.   2.   1.   2.   4.   1.   2.   4.   8.]
+			     [  3.   4.   9.  12.  16.  27.  36.  48.  64.]
+			     [  6.   2.  36.  12.   4. 216.  72.  24.   8.]
+		 	     [  2.   7.   4.  14.  49.   8.  28.  98. 343.]]
+	'''
+	
+## .metrics
 
-    Parameters: 
-            @property (Does not take parameter)
-    Usage:
-    '''
-    intercept = lin_reg.intercept
-    '''
-
-    Output:
-            '''
-            10349.456288746507
-            '''
-
-  ### LinReg.coefficients 
-    Explanation: 
-            Returns the trained coefficients
-
-    Parameters: 
-            @property (Does not take parameter)
-    Usage:
-    '''
-    coefficients = lin_reg.coefficients
-    '''
-
-    Output:
-            '''
-            array([[812.87723722]])
-            '''
-## LogReg class
-
-### Parameters
-### LogReg.train
-### LogReg.predict
-
-## GradientDescent class
-
-### Parameters
-### GradientDescent.optimizer
-### GradientDescent.predict
-### GradientDescent.get_parameters
-
-## Preprocessing class
-
-### Preprocessing.get_split_data
-
+### confusion_matrix() function
+	Explanation:
+		Returns the confusion matrix of the entered data. Operates on both categorical and regression values.
+		Entries must be of (class_numbers x N_samples) size for categorical data, and (1 x N_samples) for regression data.
+		
+	Parameters:
+		y_true: 
+			Real output
+		y_pred:
+			Predicted output
+	Usage:
+	'''
+		from learned.metrics import confusion_matrix
+		y_true = np.array([[0, 1, 1, 2, 0, 2, 1, 3]])
+		y_pred = np.array([[0, 0.8, 0, 1.2, 1, 2, 1, 2.6]])
+		print(confusion_matrix(y_true, y_pred))
+		=> [[1, 1, 0, 0],
+		    [1, 2, 1, 0],
+		    [0, 0, 1, 0],
+		    [0, 0, 0, 1]]
+	'''
+### accuracy() function
+	Explanation:
+		Returns the accuracy value for the given values.
+	
+	Parameters:
+		y_true:
+			Real output
+		y_pred:
+			Predicted output
+	Usage:
+	'''
+		from learned.metrics import accuracy
+		y_true = np.array([[0, 1, 1, 2, 0, 2, 1, 3]])
+		y_pred = np.array([[0, 0.8, 0, 1.2, 1, 2, 1, 2.6]])
+		print(accuracy(y_true, y_pred))
+		=> 0.625 (% 62.5)
+	'''
+		
+	
 ### TODO
 - cross validation
 - p-value
 - Other algorithms
-- Detailed documentation
+- Examples
