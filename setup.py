@@ -6,9 +6,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(name="learned",
-                 version="0.5.0",
-                 description="Some machine learning.",
-                 long_description="It contains deep learning model, result metrics and data preprocessing, regression, classification, recognition algorithms.",
+                 version="0.5.2",
+                 description="Package containing deep learning model, classic machine learning models, various preprocessing functions and result metrics",
+                 long_description=long_description,
+                 long_description_content_type="text/markdown",
                  author="H.Mert ULAS",
                  url=url,
                  license='MIT',

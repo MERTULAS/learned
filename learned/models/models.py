@@ -217,3 +217,67 @@ class LogReg:
     def predict(self, x):
         x = np.append(np.ones((1, x.shape[1])), x, axis=0)
         return self.__inner_predict(x)
+
+
+class KNN:
+    __slot__ = ["inputs", "outputs", "k_neighbors", "metric_func", "model_type"]
+
+    def __init__(self, x, y, k_neighbors=5, metric="euclidean", model="classification"):
+        self.inputs = x
+        self.outputs = y
+        self.k = k_neighbors
+        self.model_type = model
+        metrics_list = {"euclidean": self.__euclidean,
+                        "minkowski": self.__minkowski,
+                        "manhattan": self.__manhattan,
+                        "hamming": self.__hamming}
+
+        self.metric_func = metrics_list[metric]
+        self.distances = dict()
+
+    @staticmethod
+    def __euclidean(x, y):
+        return np.sqrt(np.abs(x - y)).sum()
+
+    @staticmethod
+    def __minkowski(x, y):
+        pass
+
+    @staticmethod
+    def __manhattan(x, y):
+        pass
+
+    @staticmethod
+    def __hamming(x, y):
+        pass
+
+    @staticmethod
+    def __most_frequent(different_classes):
+        counter = 0
+        most_freq = different_classes[0]
+
+        for element in different_classes:
+            element_freq = different_classes.count(element)
+            if element_freq > counter:
+                counter = element_freq
+                most_freq = element
+        return most_freq
+
+    def predict(self, x_test):
+        for index, sample in enumerate(self.inputs):
+            dist = self.metric_func(x_test, sample)
+            self.distances[dist] = index
+        list_ = list(self.distances)
+        list_.sort()
+        first_k_elements = list_[:self.k]
+        if self.model_type == "classification":
+            different_classes = []
+            for element in first_k_elements:
+                different_classes.append(self.outputs[self.distances[element]])
+            return self.__most_frequent(different_classes)[0]
+
+        if self.model_type == "regression":
+            sum_ = 0
+            for element in first_k_elements:
+                sum_ += self.outputs[self.distances[element]]
+            return (sum_ / self.k)[0]

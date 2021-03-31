@@ -59,23 +59,23 @@ def normalizer(data):
     return data / _max
 
 
-def polynomial_features(data, data_out=None, degree=2):
-    if data_out is None:
-        try:
-            data_x = data.values
-        except AttributeError:
-            data_x = data
-        new = np.empty((len(data_x), 0))
-        temp = data_x
-        len_new = len(data_x[0])
-        while degree > 1:
-            for i in range(len(data_x[0])):
-                for j in range(i, len_new):
-                    cross = data_x[:, i] * temp[:, j]
-                    if list(cross) not in map(lambda x: list(x), new.T):
-                        new = np.append(new, cross.reshape(len(data_x), 1), axis=1)
-            len_new = len(new[0])
-            degree -= 1
-            temp = new
-        new = np.append(data_x, new, axis=1)
-        return new
+def polynomial_features(data, degree=2):
+
+    try:
+        data_x = data.values
+    except AttributeError:
+        data_x = data
+    new = np.empty((len(data_x), 0))
+    temp = data_x
+    len_new = len(data_x[0])
+    while degree > 1:
+        for i in range(len(data_x[0])):
+            for j in range(i, len_new):
+                cross = data_x[:, i] * temp[:, j]
+                if list(cross) not in map(lambda x: list(x), new.T):
+                    new = np.append(new, cross.reshape(len(data_x), 1), axis=1)
+        len_new = len(new[0])
+        degree -= 1
+        temp = new
+    new = np.append(data_x, new, axis=1)
+    return new
