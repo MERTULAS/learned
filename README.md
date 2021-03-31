@@ -36,20 +36,20 @@
   * #### [parameters](#oheparams-1)
   * #### [methods](#ohemethods-1)
   * #### [example](#ohexample-1)
-- ### [normalizer() function](#normalizer-1)
+- ### [normalizer() function](#normalizer-function-1)
   * #### [parameters](#normalizerparams-1)
   * #### [example](#normalizerexample-1)
-- ### [get_split_data() function](#get_split_data-1)
+- ### [get_split_data() function](#get_split_data-function-1)
   * #### [parameters - hyperparameters](#getsplitdataparams-1)
   * #### [example](#getsplitdataexample-1)
-- ### [polynomial_features() function](#polynomial_features-1)
+- ### [polynomial_features() function](#polynomial_features-function-1)
   * #### [parameters - hyperparameters](#polynomialfeaturesparams-1)
   * #### [example](#polynomialfeaturesparams-1)
 - ## [.metrics](#metrics-1)
-- ### [confusion_matrix() function](#confusion_matrix-1)
+- ### [confusion_matrix() function](#confusion_matrix-function-1)
   * #### [parameters](#confusionmatrixparams-1)
   * #### [example](#confusionmatrixexample-1)
-- ### [accuracy() function](#accuracy-1)
+- ### [accuracy() function](#accuracy-function-1)
   * #### [parameters](#accuracyparams-1)
   * #### [example](#accuracyexample-1)
 
@@ -84,17 +84,17 @@ various functions. The trained model can be saved as a folder, then call this fo
 				Speciable loss functions:
 					For classifications:
 						"binary_cross_entropy" : 
-						![image](https://user-images.githubusercontent.com/67822910/113151329-a4c58300-923d-11eb-83d5-ca39e1dcc836.png)
+![image](https://user-images.githubusercontent.com/67822910/113151329-a4c58300-923d-11eb-83d5-ca39e1dcc836.png)
 						
 						"cross_entropy" :
-						![image](https://user-images.githubusercontent.com/67822910/113151263-94ada380-923d-11eb-8ad7-2747fb725d3f.png)
+![image](https://user-images.githubusercontent.com/67822910/113151263-94ada380-923d-11eb-8ad7-2747fb725d3f.png)
 						
 					For regressions:
 						"mean_square_error" : 
-						![image](https://user-images.githubusercontent.com/67822910/113151197-82cc0080-923d-11eb-8672-67b0cec52c12.png)
+![image](https://user-images.githubusercontent.com/67822910/113151197-82cc0080-923d-11eb-8672-67b0cec52c12.png)
 						
 						"mean_absolute_error" :
-						![image](https://user-images.githubusercontent.com/67822910/113151629-f4a44a00-923d-11eb-8ca2-bad33064df74.png)
+![image](https://user-images.githubusercontent.com/67822910/113151629-f4a44a00-923d-11eb-8ca2-bad33064df74.png)
 			
       
    	methods: 
@@ -165,19 +165,19 @@ various functions. The trained model can be saved as a folder, then call this fo
 			activation: 
 				Determines with which function the layer will be activated. (default values is "tanh")
 					"sigmoid": 0 - 1
-							![image](https://user-images.githubusercontent.com/67822910/113162450-fd9a1900-9247-11eb-9845-a9db231ff7d3.png)
+![image](https://user-images.githubusercontent.com/67822910/113162450-fd9a1900-9247-11eb-9845-a9db231ff7d3.png)
 					
 					"tanh":  -1 - 1
-							![image](https://user-images.githubusercontent.com/67822910/113162775-3df99700-9248-11eb-8301-6b014d3fb57a.png)
+![image](https://user-images.githubusercontent.com/67822910/113162775-3df99700-9248-11eb-8301-6b014d3fb57a.png)
 					
 					"relu":  it makes all negative values to zero
-							![image](https://user-images.githubusercontent.com/67822910/113163132-8b760400-9248-11eb-9e59-8f72ea9471dc.png)
+![image](https://user-images.githubusercontent.com/67822910/113163132-8b760400-9248-11eb-9e59-8f72ea9471dc.png)
 					
 					"softmax": it is a probability function, it return values which sums of values equal 1
-							![image](https://user-images.githubusercontent.com/67822910/113164891-33d89800-924a-11eb-9b5f-8aab6b94af0c.png)
+![image](https://user-images.githubusercontent.com/67822910/113164891-33d89800-924a-11eb-9b5f-8aab6b94af0c.png)
 					
 					"leaky_relu": it don't makes all negative values to zero but makes too close to zero
-							![image](https://user-images.githubusercontent.com/67822910/113166087-1d7f0c00-924b-11eb-8a38-870a4149a081.png)
+![image](https://user-images.githubusercontent.com/67822910/113166087-1d7f0c00-924b-11eb-8a38-870a4149a081.png)
 							
    		Example for neural network structure:
 					from learned.neural_network.models import Sequential, DNNModel
