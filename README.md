@@ -213,7 +213,7 @@ various functions. The trained model can be saved as a folder, then call this fo
 					ohe_tr = OneHotEncoder(y_labels_tr).transform()
 					ohe_te = OneHotEncoder(y_labels_te).transform()
 					
-					Model = Sequential(pixels_tr, ohe_tr, learning_rate=0.01, loss="cross_entropy", iteration=100)
+					Model = Sequential(pixels_tr, ohe_tr, learning_rate=0.01, loss="cross_entropy", iteration=600)
 
 					Model.add(Layer(neurons=150, activation="relu", weights_initializer="he_normal"))
 					Model.add(Layer(neurons=150, activation="relu", weights_initializer="he_normal"))
