@@ -84,7 +84,7 @@ various functions. The trained model can be saved as a folder, then call this fo
 				Speciable loss functions:
 					For classifications:
 						"binary_cross_entropy" : 
-<p align="center">![image](https://user-images.githubusercontent.com/67822910/113151329-a4c58300-923d-11eb-83d5-ca39e1dcc836.png)</p>
+<p align="center"><img src="https://user-images.githubusercontent.com/67822910/113151329-a4c58300-923d-11eb-83d5-ca39e1dcc836.png">![image](https://user-images.githubusercontent.com/67822910/113151329-a4c58300-923d-11eb-83d5-ca39e1dcc836.png)</p>
 						
 						"cross_entropy" :
 ![image](https://user-images.githubusercontent.com/67822910/113151263-94ada380-923d-11eb-8ad7-2747fb725d3f.png)
