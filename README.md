@@ -2,7 +2,8 @@
 ### Machine Learning library for Python
 
 ## Introduction
-###### Package containing deep learning model, classic machine learning models, various preprocessing functions and result metrics
+#### Package containing deep learning model, classic machine learning models, various preprocessing functions and result metrics
+
 
 ![image](https://user-images.githubusercontent.com/67822910/113212247-2e497500-927f-11eb-8ac5-539676edaa41.png)
 ![image](https://user-images.githubusercontent.com/67822910/113213441-e0357100-9280-11eb-954c-b5b1e33c2aa3.png)
