@@ -1,24 +1,22 @@
-from time import time
 import numpy as np
-
-# Author: H.Mert ULAS <h.mert.ulas@gmail.com>
+from time import time
 
 
 class GradientDescent:
     __slots__ = ["learning_rate", "weights", "heights", "beta", "data_x", "cost"]
 
-    def __init__(self, data, learning_rate=0.00001):
+    def __init__(self, data_x, data_y, learning_rate=0.00001):
         try:
-            self.data_x = np.array(data.iloc[:, :-1].values)
+            self.data_x = data_x.values
         except AttributeError:
-            self.data_x = np.array(data[:, :-1])
+            self.data_x = data_x
         self.weights = np.append(np.ones((self.data_x.shape[0], 1)),
                                  self.data_x,
                                  axis=1)
         try:
-            self.heights = np.array(data.iloc[:, -1:].values)
+            self.heights = data_y.values
         except AttributeError:
-            self.heights = np.array(data[:, -1:])
+            self.heights = data_y
         self.beta = np.append(np.ones((1, 1)) * self.heights.sum() / len(self.heights),
                               np.zeros((self.data_x.shape[1], 1)),
                               axis=0)
@@ -68,42 +66,46 @@ class GradientDescent:
         r2_score = self.r2_score(self.heights, model_output_predict)
         print("R-Squared:%{}".format(100 * r2_score))
 
-    def test(self, data):
+    def test(self, data_x, data_y):
         try:
-            weight_x = data.iloc[:, :-1].values
+            x = data_x.values
         except AttributeError:
-            weight_x = data[:, :-1]
-        weight = np.append(np.ones((weight_x.shape[0], 1)),
-                           weight_x,
+            x = data_x
+        x_test = np.append(np.ones((x.shape[0], 1)),
+                           x,
                            axis=1)
         try:
-            height = data.iloc[:, -1:].values
+            height = data_y.values
         except AttributeError:
-            height = data[:, -1:]
+            height = data_y
 
-        test_data_predict = np.dot(weight, self.beta)
+        test_data_predict = np.dot(x_test, self.beta)
         r2_score = self.r2_score(height, test_data_predict)
         print("Test Score: %{}".format(100 * r2_score))
 
     def get_parameters(self):
         return self.beta[0][0], self.beta[1:]
 
+    def predict(self, x):
+        input_x = np.append(np.ones((x.shape[0], 1)), x, axis=1)
+        return np.dot(input_x, self.beta)
+
 
 class LinReg:
     __slots__ = ["x_train", "x", "y", "theta_init", "theta"]
 
-    def __init__(self, data):
+    def __init__(self, data_x, data_y):
         try:
-            self.x_train = np.array(data.iloc[:, :-1].values)
+            self.x_train = data_x.values
         except AttributeError:
-            self.x_train = np.array(data[:, :-1])
+            self.x_train = data_x
         self.x = np.append(np.ones((self.x_train.shape[0], 1)),
                            self.x_train,
                            axis=1)
         try:
-            self.y = np.array(data.iloc[:, -1:].values)
+            self.y = data_y.values
         except AttributeError:
-            self.y = np.array(data[:, -1:])
+            self.y = data_y
         self.theta_init = np.append(np.ones((1, 1)) * (self.y.sum() / len(self.y)),
                                     np.ones((self.x_train.shape[1], 1)) * 0,
                                     axis=0)
@@ -122,19 +124,19 @@ class LinReg:
         print(f"Training R2-Score: % {self.__r2_inside(self.x, self.y) * 100}")
         print(f"Intercept: {self.theta[0][0]}, Coefficients: {self.theta[1:].reshape(1, len(self.theta) - 1)}")
 
-    def test(self, t_data):
+    def test(self, test_x, test_y):
         if self.theta.size != 0:
             try:
-                x_test = np.array(t_data.iloc[:, :-1].values)
+                x_test = test_x.values
             except AttributeError:
-                x_test = np.array(t_data[:, :-1])
+                x_test = test_x
             x = np.append(np.ones((x_test.shape[0], 1)),
                           x_test,
                           axis=1)
             try:
-                y = np.array(t_data.iloc[:, -1:].values)
+                y = test_y.values
             except AttributeError:
-                y = np.array(t_data[:, -1:])
+                y = test_y
             self.theta_init[0] = (y.sum() / len(y))
             print(f"Testing R2-Score: % {self.__r2_inside(x, y) * 100}")
         else:
@@ -215,49 +217,3 @@ class LogReg:
     def predict(self, x):
         x = np.append(np.ones((1, x.shape[1])), x, axis=0)
         return self.__inner_predict(x)
-
-
-class Preprocessing:
-    __slots__ = ["data"]
-
-    def __init__(self, data):
-        self.data = data
-
-    def get_split_data(self, test_percentage=0.33, randomizer=True):
-        if randomizer:
-            data_len = len(self.data)
-            random_indexes = [i for i in range(data_len)]
-            np.random.shuffle(random_indexes)
-            data_test = \
-                np.array([self.data.iloc[:, :].values[i] for i in random_indexes[:round(data_len * test_percentage)]],
-                         dtype="int")
-            data_train = \
-                np.array([self.data.iloc[:, :].values[i] for i in random_indexes[round(data_len * test_percentage):]],
-                         dtype="int")
-            return data_train, data_test
-        else:
-            pass
-
-    @staticmethod
-    def polynomial_features(data, data_out=None, degree=2):
-        if data_out is None:
-            try:
-                data_x = data.iloc[:, :-1].values
-                data_y = data.iloc[:, -1:].values
-            except AttributeError:
-                data_x = data[:, :-1]
-                data_y = data[:, -1:]
-            new = np.empty((len(data_x), 0))
-            temp = data_x
-            len_new = len(data_x[0])
-            while degree > 1:
-                for i in range(len(data_x[0])):
-                    for j in range(i, len_new):
-                        cross = data_x[:, i] * temp[:, j]
-                        if list(cross) not in map(lambda x: list(x), new.T):
-                            new = np.append(new, cross.reshape(len(data_x), 1), axis=1)
-                len_new = len(new[0])
-                degree -= 1
-                temp = new
-            new = np.append(data_x, new, axis=1)
-            return np.append(new, data_y, axis=1)
