@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: learned
-Version: 0.5.4.3
+Version: 0.5.4.4
 Summary: Package containing deep learning model, classic machine learning models, various preprocessing functions and result metrics
 Home-page: https://github.com/MERTULAS/learned
 Author: H.Mert ULAS

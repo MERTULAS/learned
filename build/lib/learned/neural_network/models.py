@@ -130,6 +130,7 @@ class DNNModel:
         with open(model_folder + "/activations.json", "r") as f:
             self.model_funcs = json.load(f)
         self.weights = os.listdir(self.model_folder)[1:]
+        self.weights.sort()
         self.activation_func_list = {"tanh": self.__tanh, "relu": self.__relu, "sigmoid": self.__sigmoid,
                                      "softmax": self.__softmax, "leaky_relu": self.__leaky_relu}
 
