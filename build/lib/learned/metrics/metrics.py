@@ -22,10 +22,13 @@ def confusion_matrix(y_true, y_pred):
 
 
 def accuracy_calc(function):
-    def calculator(y_true, y_pred):
-        confusion_m = confusion_matrix(y_true, y_pred)
-        identity_matrix = np.eye(confusion_m.shape[0], confusion_m.shape[1])
-        return (confusion_m * identity_matrix).sum() / confusion_m.sum()
+    def calculator(y_true, y_pred, type_="categorical"):
+        if type_ == "categorical":
+            confusion_m = confusion_matrix(y_true, y_pred)
+            identity_matrix = np.eye(confusion_m.shape[0], confusion_m.shape[1])
+            return (confusion_m * identity_matrix).sum() / confusion_m.sum()
+        elif type_ == "regression":
+            return 1 - np.average(np.abs(y_pred - y_true))
     return calculator
 
 

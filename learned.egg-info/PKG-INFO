@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: learned
-Version: 0.5.4.4
+Version: 0.5.4.5
 Summary: Package containing deep learning model, classic machine learning models, various preprocessing functions and result metrics
 Home-page: https://github.com/MERTULAS/learned
 Author: H.Mert ULAS
@@ -562,5 +562,5 @@ Classifier: License :: OSI Approved :: MIT License
 Classifier: Programming Language :: Python :: 3
 Classifier: Topic :: Software Development :: Libraries
 Classifier: Topic :: Software Development :: Libraries :: Python Modules
-Requires-Python: >=3.5.0
+Requires-Python: >=3.6.0
 Description-Content-Type: text/markdown

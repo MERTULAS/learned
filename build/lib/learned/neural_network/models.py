@@ -60,22 +60,19 @@ class Sequential:
         return -1 * (self.y / out)
 
     def __mse(self, out):
-        return (self.y - out) ** 2
+        return -(self.y - out) ** 2
 
     def __d_mse(self, out):
         return -2 * (self.y - out)
 
     def __mae(self, out):
-        return np.abs(self.y - out)
+        return -np.abs(self.y - out)
 
     def __d_mae(self, out):
         out[out > self.y] = 1
         out[out < self.y] = -1
         return out
 
-    """@staticmethod
-    def __accuracy(prediction_out, true_y):
-        return 100 - np.average(np.abs(prediction_out - true_y)) * 100"""
     @staticmethod
     @accuracy_calc
     def __acc(**kwargs):
@@ -89,12 +86,17 @@ class Sequential:
         self.__layers_weights_initializer(self.x.shape[0])
         self.cost_list = []
         softmax_check = 1 if self.NN_structure[-1].activation == "softmax" else 0
+        classifier_check = 1 if softmax_check or (self.reverse_NN_structure[0].neurons == 1 and
+                                                  self.reverse_NN_structure[0].activation == "sigmoid"
+                                                  and len(set(self.y[0])) == 2 and 1 in set(self.y[0])
+                                                  and 0 in set(self.y[0])) else 0
+        acc_type = "categorical" if classifier_check else "regression"
         for i in range(self.iteration):
             out = self.__recursion_forward(0, self.x)
             loss = self.loss_func(out)
             cost = -loss.sum() / self.y.shape[1]
             self.cost_list.append(cost)
-            acc = self.__acc(self.y, self.predict(self.x)) * 100
+            acc = self.__acc(self.y, out, acc_type) * 100
             self.accuracy_list.append(acc)
             print("\r", f"Epoch:{i + 1}/{self.iteration}......Cost:{cost}......Accuracy: %{acc}", end="")
             if softmax_check:
@@ -102,7 +104,7 @@ class Sequential:
             else:
                 d_error = self.loss_func_derivative(out)
             self.__recursion_backward(0, d_error)
-        print("\n\nTrain Acc: % " + f"{self.__acc(self.y, self.predict(self.x)) * 100}")
+        print("\n\nTrain Acc: % " + f"{self.__acc(self.y, self.predict(self.x), acc_type) * 100}")
 
     def test(self, x, y):
         print("Test Acc: % " + f"{self.__acc(y, self.predict(x)) * 100}")

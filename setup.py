@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(name="learned",
-                 version="0.5.4.4",
+                 version="0.5.4.5",
                  description="Package containing deep learning model, classic machine learning models, various preprocessing functions and result metrics",
                  long_description=long_description,
                  long_description_content_type="text/markdown",
@@ -24,5 +24,5 @@ setuptools.setup(name="learned",
                   'Topic :: Software Development :: Libraries',
                   'Topic :: Software Development :: Libraries :: Python Modules'
                  ],
-                 python_requires='>=3.5.0',
+                 python_requires='>=3.6.0',
                  install_requires=["numpy>=1.14.0"])
